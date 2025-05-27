@@ -12,7 +12,6 @@ This is a secure, production-ready RESTful API for a **Todo application** built 
 - ✅ Global Rate Limiting (Throttler)
 - ✅ Validation, Sanitization, Helmet, and CORS protection
 - ✅ Full Swagger API documentation
-- ✅ 80%+ Unit and Integration Test Coverage using Jest
 
 ---
 

@@ -15,7 +15,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         { provide: UsersService, useValue: { findEmail: jest.fn() } },
-        { provide: JwtService, useValue: { sign: jest.fn() } },
+        { provide: JwtService, useValue: { signAsync: jest.fn() } },
       ],
     }).compile();
 
@@ -54,14 +54,17 @@ describe('AuthService', () => {
   });
 
   it('should return access and refresh tokens on login', async () => {
-    const user = { id: '1', email: 'test@test.com', password: 'hashed' };
+    const user = {
+      id: '1',
+      email: 'test@test.com',
+      password: 'hashed',
+      createdAt: new Date(),
+    };
     const dto = { email: user.email, password: 'test123' };
 
     jest.spyOn(service, 'validateUser').mockResolvedValue(user);
-    jest
-      .spyOn(jwtService, 'sign' as any)
-      .mockResolvedValueOnce('access-token')
-      .mockResolvedValueOnce('refresh-token');
+    jest.spyOn(jwtService, 'signAsync').mockResolvedValueOnce('access-token');
+    jest.spyOn(jwtService, 'signAsync').mockResolvedValueOnce('refresh-token');
 
     const result = await service.login(dto);
     expect(result).toEqual({

@@ -54,7 +54,7 @@ describe('TodosService', () => {
       completed: false,
     };
 
-    jest.spyOn(prisma.todo, 'create').mockRejectedValue(mockTodo);
+    jest.spyOn(prisma.todo, 'create').mockResolvedValue(mockTodo);
 
     const result = await service.create(userId, dto);
     expect(redis.del).toHaveBeenCalledWith(`user:${userId}:todo-stats`);
@@ -66,7 +66,7 @@ describe('TodosService', () => {
     const filter = { completed: false, search: 'task', page: 1, limit: 10 };
     const mockTodos = [{ id: '1', title: 'task 1', completed: false }];
 
-    jest.spyOn(prisma.todo, 'findMany').mockRejectedValue(mockTodos);
+    jest.spyOn(prisma.todo, 'findMany').mockResolvedValue(mockTodos);
 
     const result = await service.findAll(userId, filter);
     expect(result).toEqual(mockTodos);
@@ -99,17 +99,18 @@ describe('TodosService', () => {
   it('should update a todo and clear cache', async () => {
     const updatedTodo = {
       id: '1',
-      userId: 'user1',
-      title: 'Update',
+      title: 'Updated Task',
       completed: true,
+      userId: 'user1',
     };
 
     jest.spyOn(prisma.todo, 'update').mockResolvedValue(updatedTodo);
 
     const result = await service.update('1', {
-      title: 'Update',
+      title: 'Updated Task',
       completed: true,
     });
+
     expect(redis.del).toHaveBeenCalledWith('user:user1:todo-stats');
     expect(result).toEqual(updatedTodo);
   });
@@ -117,9 +118,9 @@ describe('TodosService', () => {
   it('should delete a todo and clear cache', async () => {
     const deletedTodo = {
       id: '1',
-      userId: 'user1',
-      title: 'Old',
+      title: 'Deleted Task',
       completed: false,
+      userId: 'user1',
     };
 
     jest.spyOn(prisma.todo, 'delete').mockResolvedValue(deletedTodo);

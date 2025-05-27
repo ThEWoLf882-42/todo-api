@@ -68,15 +68,13 @@ export class TodosService {
   }
 
   async update(id: string, dto: UpdateTodoDto) {
-    const todo = this.prisma.todo.update({ where: { id }, data: dto });
-
+    const todo = await this.prisma.todo.update({ where: { id }, data: dto });
     await this.redis.del(`user:${todo.userId}:todo-stats`);
     return todo;
   }
 
   async remove(id: string) {
-    const todo = this.prisma.todo.delete({ where: { id } });
-
+    const todo = await this.prisma.todo.delete({ where: { id } });
     await this.redis.del(`user:${todo.userId}:todo-stats`);
     return todo;
   }

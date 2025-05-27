@@ -24,12 +24,12 @@ export class AuthService {
     const user = await this.validateUser(dto.email, dto.password);
     const payload = { email: user.email, sub: user.id };
 
-    const accessToken = this.jwtService.sign(payload, {
+    const accessToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
-    const refreshToken = this.jwtService.sign(payload, {
+    const refreshToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
       expiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
     });

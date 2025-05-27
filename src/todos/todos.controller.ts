@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -13,6 +14,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { FilterTodoDto } from './dto/filter-todo.dto';
+import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('todos')
@@ -35,7 +37,12 @@ export class TodosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string) {
+  update(@Param('id') id: string, @Body() dto: UpdateTodoDto) {
+    return this.todosService.update(id, dto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
     return this.todosService.remove(id);
   }
 }

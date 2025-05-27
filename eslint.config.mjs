@@ -26,9 +26,10 @@ export default tseslint.config(
   },
   {
     rules: {
+      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn'
+      '@typescript-eslint/no-unsafe-argument': 'warn',
     },
   },
 );

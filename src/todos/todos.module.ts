@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { TodosController } from './todos.controller';
 import { PrismaService } from 'prisma/prisma.service';
+import { RedisModule } from 'src/redis/redis.module';
 
 @Module({
+  imports: [RedisModule],
   providers: [TodosService],
   controllers: [TodosController, PrismaService],
 })

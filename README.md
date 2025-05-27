@@ -48,10 +48,11 @@ npm install
 ### 3. Setup `.env` file
 
 ```env
-PORT=3000
 DATABASE_URL=postgresql://user:password@localhost:5432/todo_db
 JWT_SECRET=your_access_secret
+JWT_EXPIRES_IN=access_secret_expiration
 JWT_REFRESH_SECRET=your_refresh_secret
+JWT_REFRESH_EXPIRES_IN=refresh_secret_expiration
 REDIS_URL=redis://localhost:6379
 ORIGIN=http://localhost:4200
 ```

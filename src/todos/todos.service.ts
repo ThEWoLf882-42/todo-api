@@ -4,6 +4,7 @@ import { CreateTodoDto } from './dto/create-todo.dto';
 import { FilterTodoDto } from './dto/filter-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { RedisService } from 'src/redis/redis.service';
+import sanitizeHtml from 'sanitize-html';
 
 @Injectable()
 export class TodosService {
@@ -13,6 +14,7 @@ export class TodosService {
   ) {}
 
   async create(userId: string, dto: CreateTodoDto) {
+    const cleanTitle = sanitizeHtml(dto.title);
     const todo = await this.prisma.todo.create({
       data: {
         title: dto.title,

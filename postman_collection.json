@@ -1,0 +1,163 @@
+{
+  "info": {
+    "name": "NestJS Todo API",
+    "_postman_id": "1e58c7c2-5bc7-4d57-baa6-7e30431ecabc",
+    "description": "Collection for testing NestJS Todo API with Auth and Refresh Token Rotation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"securepassword123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/login",
+          "host": ["localhost:3000"],
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Refresh Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{refreshToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/auth/refresh",
+          "host": ["localhost:3000"],
+          "path": ["auth", "refresh"]
+        }
+      }
+    },
+    {
+      "name": "Todos - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Finish NestJS testing\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/todos",
+          "host": ["localhost:3000"],
+          "path": ["todos"]
+        }
+      }
+    },
+    {
+      "name": "Todos - Get All",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/todos",
+          "host": ["localhost:3000"],
+          "path": ["todos"]
+        }
+      }
+    },
+    {
+      "name": "Todos - Stats",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/todos/stats",
+          "host": ["localhost:3000"],
+          "path": ["todos", "stats"]
+        }
+      }
+    },
+    {
+      "name": "Todos - Update",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"completed\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/todos/:id",
+          "host": ["localhost:3000"],
+          "path": ["todos", ":id"]
+        }
+      }
+    },
+    {
+      "name": "Todos - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/todos/:id",
+          "host": ["localhost:3000"],
+          "path": ["todos", ":id"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    }
+  ]
+}

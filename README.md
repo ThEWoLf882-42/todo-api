@@ -96,22 +96,6 @@ Import the Postman Collection from [`postman_collection.json`](./postman_collect
 
 ---
 
-## 📁 Project Structure
-
-```
-src/
-├── auth/
-├── users/
-├── todos/
-├── redis/
-├── prisma/
-├── app.controller.ts
-├── app.module.ts
-└── main.ts
-```
-
----
-
 ## 🧩 Tech Stack
 
 - NestJS

@@ -29,6 +29,9 @@ export class TodosService {
   async findAll(userId: string, filter: FilterTodoDto) {
     const { completed, search, page = 1, limit = 10 } = filter;
 
+    const take = Number(limit);
+    const skip = (Number(page) - 1) * take;
+
     return this.prisma.todo.findMany({
       where: {
         userId,
@@ -40,8 +43,8 @@ export class TodosService {
           },
         }),
       },
-      skip: (page - 1) * limit,
-      take: limit,
+      skip,
+      take,
       orderBy: {
         createdAt: 'desc',
       },
